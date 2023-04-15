@@ -1,0 +1,31 @@
+# Ignore files in root folder
+
+# Builds
+/[Bb]uilds/
+/[Bb]uildsReports/
+
+# Some folders with sensitive info
+/Marketing/ExcludedFromGit/
+/Docs/ExcludedFromGit/
+/AssetsRaw/Art/ExcludedFromGit/
+
+# Logs for errors
+/[Ll]ogs/
+
+# Recordings
+/[Rr]ecordings/
+
+# Krita autosave
+*autosave.kra
+*.kra~
+
+*.png~
+
+*.psd~
+
+# Some folders with examples, etc.
+/Archive/
+/Docs/desc.txt
+/GamesJobFair_clone_0/
+/LobbyRelayExample/
+
