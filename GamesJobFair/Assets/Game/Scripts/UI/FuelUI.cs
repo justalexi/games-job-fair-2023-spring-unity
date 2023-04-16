@@ -1,4 +1,5 @@
 using System.Collections;
+using Game.GameModes.Single;
 using TMPro;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ namespace Game.UI
 {
     public class FuelUI : MonoBehaviour
     {
+        // jTODO support both single and multiplayer
         // jTODO on disconnect - make it 'null'
         private PlaneController _planeController;
 
@@ -27,11 +29,12 @@ namespace Game.UI
                 if (_planeController == null)
                 {
                     var planeController = FindObjectOfType<PlaneController>();
-                    if (planeController != null && planeController.IsOwner)
-                    {
-                        _planeController = planeController;
-                        _planeController.OnFuelChanged += OnFuelChanged;
-                    }
+                    // jTODO
+                    // if (planeController != null && planeController.IsOwner)
+                    // {
+                    //     _planeController = planeController;
+                    //     _planeController.OnFuelChanged += OnFuelChanged;
+                    // }
                 }
             }
         }

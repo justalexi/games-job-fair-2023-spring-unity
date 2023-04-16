@@ -1,3 +1,4 @@
+using Game.Configs;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -5,16 +6,15 @@ namespace Game.Utils
 {
     public class SceneLoader : MonoBehaviour
     {
-        // NB! Method is called from GameEvent
-        public void LoadMultiplayerScene()
-        {
-            /*AsyncOperation asyncLoad = */SceneManager.LoadSceneAsync("Multiplayer", LoadSceneMode.Additive);
+        [SerializeField]
+        private GameConfig _gameConfig;
 
-            // Wait until the asynchronous scene fully loads
-            // while (!asyncLoad.isDone)
-            // {
-            //     yield return null;
-            // }
+
+        // NB! Method is called from GameEvent
+        public void LoadGameScene()
+        {
+            var gameSceneName = _gameConfig.GameMode == GameMode.Single ? "Single" : "Multi";
+            SceneManager.LoadSceneAsync(gameSceneName, LoadSceneMode.Additive);
         }
     }
 }

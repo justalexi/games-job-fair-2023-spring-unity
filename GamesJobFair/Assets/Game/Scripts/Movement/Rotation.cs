@@ -10,6 +10,11 @@ namespace Game.Movement
         [SerializeField]
         private float _angularSpeed;
 
+        [SerializeField]
+        private bool _useUnscaledTime;
+
+        private float DeltaTime => _useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
+
         // jTODO make it shared
         private float _angle;
 
@@ -17,7 +22,7 @@ namespace Game.Movement
         private void Update()
         {
             // _angle = _angularSpeed * Time.deltaTime;
-            transform.Rotate(_axis, _angularSpeed * Time.deltaTime);
+            transform.Rotate(_axis, _angularSpeed * DeltaTime);
         }
     }
 }
