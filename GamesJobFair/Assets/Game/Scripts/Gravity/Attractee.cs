@@ -5,6 +5,11 @@ namespace Game.Gravity
     [RequireComponent(typeof(Rigidbody))]
     public class Attractee : MonoBehaviour
     {
+        // Using primitive way of keeping objects on the surface of the planet
+        [SerializeField]
+        private Vector3 _gravityCenter;
+
+
         // jTODO move to SO
         private float _gravity = -9.81f;
 
@@ -13,8 +18,6 @@ namespace Game.Gravity
 
         public Rigidbody Rigidbody => _rigidbody;
 
-        // Using primitive way of keeping objects on the surface of the planet
-        private Vector3 _gravityCenter;
 
         private void Awake()
         {
@@ -35,7 +38,14 @@ namespace Game.Gravity
             var transformCache = transform;
             var direction = (transformCache.position - _gravityCenter).normalized;
 
-            transform.rotation = Quaternion.FromToRotation(transformCache.up, direction) * transformCache.rotation;
+            // transform.rotation = Quaternion.FromToRotation(transformCache.up, direction) * transformCache.rotation;
+            _rigidbody.rotation = Quaternion.FromToRotation(transformCache.up, direction) * transformCache.rotation;
+
+            var distance = 100f;
+            Debug.DrawRay(transformCache.position, distance * transformCache.up, Color.green, 1f);
+            Debug.DrawRay(transformCache.position, distance * direction, Color.red, 1f);
+            Debug.DrawRay(transformCache.position, distance * transformCache.forward, Color.blue, 1f);
+            
             _rigidbody.AddForce(direction * _gravity);
         }
     }

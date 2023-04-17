@@ -6,7 +6,8 @@ namespace Game.Configs
     public class PlaneConfig
     {
         public float Speed;
-        public float SuperSpeed;
+        public float RotationSpeed;
+        public float DashSpeed;
 
         public float FuelCapacity;
         

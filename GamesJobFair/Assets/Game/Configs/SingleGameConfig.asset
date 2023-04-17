@@ -12,4 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f95e2233e014436b89c6c47a9f424a2, type: 3}
   m_Name: SingleGameConfig
   m_EditorClassIdentifier: 
-  GameMode1: 0
+  GameMode: 0
+  PlaneConfig:
+    Speed: 9.38
+    RotationSpeed: 3
+    DashSpeed: 0
+    FuelCapacity: 0
+  LevelConfigs:
+  - {fileID: 11400000, guid: 1c5e3f97373b8977b9ed7d8c0484a37c, type: 2}
+  - {fileID: 11400000, guid: 61327f7d3495ff7b9a50283c111b5745, type: 2}
+  - {fileID: 11400000, guid: 6d4aa206a00df1c6c80e7ad4f3f05be9, type: 2}
+  - {fileID: 11400000, guid: b257b2be03f30edd899032f160d7c543, type: 2}
+  - {fileID: 11400000, guid: 5049d2fecdd16472f995aede2dd7de42, type: 2}
+  CameraSpeed: 4

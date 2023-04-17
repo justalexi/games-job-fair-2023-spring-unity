@@ -46,10 +46,9 @@ namespace Game.UI
             _gameController = FindObjectOfType<GameController>();
             if (_gameController != null)
             {
-                // jTODO
-                // _gameController.OnTimeChanged += OnTimeChanged;
-                // _gameController.OnGameFailure += OnGameFailure;
-                // _gameController.OnGameSuccess += OnGameSuccess;
+                _gameController.OnTimeChanged += OnTimeChanged;
+                _gameController.OnGameFailure += OnGameFailure;
+                _gameController.OnGameSuccess += OnGameSuccess;
             }
 
             ControlsReader.Instance.OnTogglePause += OnTogglePause;
@@ -75,10 +74,9 @@ namespace Game.UI
 
             if (_gameController != null)
             {
-                // jTODO
-                // _gameController.OnTimeChanged -= OnTimeChanged;
-                // _gameController.OnGameFailure -= OnGameFailure;
-                // _gameController.OnGameSuccess -= OnGameSuccess;
+                _gameController.OnTimeChanged -= OnTimeChanged;
+                _gameController.OnGameFailure -= OnGameFailure;
+                _gameController.OnGameSuccess -= OnGameSuccess;
             }
 
             ControlsReader.Instance.OnTogglePause -= OnTogglePause;
@@ -88,6 +86,19 @@ namespace Game.UI
         // {
         //     _starsText.text = numStars.ToString();
         // }
+
+        private void OnTimeChanged(float time)
+        {
+            var totalSeconds = Mathf.FloorToInt(time);
+
+            var numMinutes = totalSeconds / 60;
+            var numMinutesFull = $"{(numMinutes < 10 ? "0" : "")}{numMinutes}";
+
+            var numSeconds = totalSeconds % 60;
+            var numSecondsFull = $"{(numSeconds < 10 ? "0" : "")}{numSeconds}";
+
+            _timerText.text = $"<mspace=0.45em>{numMinutesFull}:{numSecondsFull}";
+        }
 
         private void OnGameFailure()
         {
@@ -111,19 +122,6 @@ namespace Game.UI
         // {
         //     _UIManager.SwitchTo(typeof(GameOverState));
         // }
-
-        private void OnTimeChanged(float time)
-        {
-            var totalSeconds = Mathf.FloorToInt(time);
-
-            var numMinutes = totalSeconds / 60;
-            var numMinutesFull = $"{(numMinutes < 10 ? "0" : "")}{numMinutes}";
-
-            var numSeconds = totalSeconds % 60;
-            var numSecondsFull = $"{(numSeconds < 10 ? "0" : "")}{numSeconds}";
-
-            _timerText.text = $"<mspace=0.45em>{numMinutesFull}:{numSecondsFull}";
-        }
 
         // Pause can be triggered from Controls and UI
         private void OnTogglePause()

@@ -39,6 +39,15 @@ namespace Game.Configs
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""Rotate"",
+                    ""type"": ""Value"",
+                    ""id"": ""866f787c-dbe6-476f-86e7-96d66dae336f"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""Look"",
                     ""type"": ""Value"",
                     ""id"": ""5fe7029a-b2c0-4736-8e71-6908332a1edb"",
@@ -308,6 +317,72 @@ namespace Game.Configs
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7981e7b7-333c-4a71-8194-18be5d5ba606"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""AD"",
+                    ""id"": ""a32d8806-bcc6-4069-b19c-19dea9442aaf"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Negative"",
+                    ""id"": ""83b34fb4-911a-4e09-9e1f-ad416b5bcfdb"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Negative"",
+                    ""id"": ""f235ea19-9168-4b85-b7c4-2e12e585a595"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Positive"",
+                    ""id"": ""76c9541c-4693-4ff2-b938-1142929640f2"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Positive"",
+                    ""id"": ""08a8b58d-3625-4afd-85ba-8a34c3b3cdeb"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -925,6 +1000,7 @@ namespace Game.Configs
             // Game
             m_Game = asset.FindActionMap("Game", throwIfNotFound: true);
             m_Game_Move = m_Game.FindAction("Move", throwIfNotFound: true);
+            m_Game_Rotate = m_Game.FindAction("Rotate", throwIfNotFound: true);
             m_Game_Look = m_Game.FindAction("Look", throwIfNotFound: true);
             m_Game_Act = m_Game.FindAction("Act", throwIfNotFound: true);
             m_Game_Pause = m_Game.FindAction("Pause", throwIfNotFound: true);
@@ -1001,6 +1077,7 @@ namespace Game.Configs
         private readonly InputActionMap m_Game;
         private IGameActions m_GameActionsCallbackInterface;
         private readonly InputAction m_Game_Move;
+        private readonly InputAction m_Game_Rotate;
         private readonly InputAction m_Game_Look;
         private readonly InputAction m_Game_Act;
         private readonly InputAction m_Game_Pause;
@@ -1009,6 +1086,7 @@ namespace Game.Configs
             private @Controls m_Wrapper;
             public GameActions(@Controls wrapper) { m_Wrapper = wrapper; }
             public InputAction @Move => m_Wrapper.m_Game_Move;
+            public InputAction @Rotate => m_Wrapper.m_Game_Rotate;
             public InputAction @Look => m_Wrapper.m_Game_Look;
             public InputAction @Act => m_Wrapper.m_Game_Act;
             public InputAction @Pause => m_Wrapper.m_Game_Pause;
@@ -1024,6 +1102,9 @@ namespace Game.Configs
                     @Move.started -= m_Wrapper.m_GameActionsCallbackInterface.OnMove;
                     @Move.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnMove;
                     @Move.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnMove;
+                    @Rotate.started -= m_Wrapper.m_GameActionsCallbackInterface.OnRotate;
+                    @Rotate.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnRotate;
+                    @Rotate.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnRotate;
                     @Look.started -= m_Wrapper.m_GameActionsCallbackInterface.OnLook;
                     @Look.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnLook;
                     @Look.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnLook;
@@ -1040,6 +1121,9 @@ namespace Game.Configs
                     @Move.started += instance.OnMove;
                     @Move.performed += instance.OnMove;
                     @Move.canceled += instance.OnMove;
+                    @Rotate.started += instance.OnRotate;
+                    @Rotate.performed += instance.OnRotate;
+                    @Rotate.canceled += instance.OnRotate;
                     @Look.started += instance.OnLook;
                     @Look.performed += instance.OnLook;
                     @Look.canceled += instance.OnLook;
@@ -1214,6 +1298,7 @@ namespace Game.Configs
         public interface IGameActions
         {
             void OnMove(InputAction.CallbackContext context);
+            void OnRotate(InputAction.CallbackContext context);
             void OnLook(InputAction.CallbackContext context);
             void OnAct(InputAction.CallbackContext context);
             void OnPause(InputAction.CallbackContext context);

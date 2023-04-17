@@ -19,22 +19,22 @@ namespace Game.Configs
                 return _instance;
             }
         }
-        
+
+        public float RotateValue => _controls.Game.Rotate.ReadValue<float>();
         public event Action OnTogglePause;
-        
+
         private Controls _controls;
 
 
-        
-        
         private ControlsReader()
         {
             _controls = new Controls();
-            
+
             _controls.Game.Pause.performed += OnTogglePausePerformed;
             _controls.UI.Unpause.performed += OnTogglePausePerformed;
 
-            // _controls.UI.Set
+            // jTODO remove
+            _controls.Game.Enable();
         }
 
         private void OnTogglePausePerformed(InputAction.CallbackContext context)

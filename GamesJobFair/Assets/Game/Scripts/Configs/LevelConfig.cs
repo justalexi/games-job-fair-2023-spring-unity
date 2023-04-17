@@ -1,4 +1,5 @@
 using Game.Entities;
+using Game.Utils;
 using UnityEngine;
 
 namespace Game.Configs
@@ -11,14 +12,17 @@ namespace Game.Configs
         public float Duration;
 
         public float DecayRate;
-        
+
         // jTODO rename (it is state of well-being or smth)
         public float TotalHealth;
 
-        public Transform[] TargetLocations;
+        // public Transform[] TargetLocations;
+        public SpawnPointsCollector Sources;
+        public SpawnPointsCollector Targets;
 
-        public Transform[] ResourceSpawnLocations;
+        // public Transform[] ResourceSpawnLocations;
 
         public Necessity NecessityPrefab;
+        public GameObject TargetPrefabs;
     }
 }
