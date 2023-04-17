@@ -50,9 +50,7 @@ namespace Game.UI
         // Pause can be triggered from Controls and UI
         private void OnTogglePause()
         {
-            // jTODO revert
-            // _UIManager.SwitchTo(typeof(GameState));
-            _UIManager.SwitchTo(typeof(MainMenuState));
+            _UIManager.SwitchTo(typeof(GameState));
         }
 
         private void OnQuit()

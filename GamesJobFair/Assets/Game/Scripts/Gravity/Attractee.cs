@@ -9,8 +9,7 @@ namespace Game.Gravity
         [SerializeField]
         private Vector3 _gravityCenter;
 
-
-        // jTODO move to SO
+        [SerializeField]
         private float _gravity = -9.81f;
 
 
@@ -22,10 +21,6 @@ namespace Game.Gravity
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
-
-            // jTODO maybe do it in the Inspector
-            // _rigidbody.useGravity = false;
-            // _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
         }
 
         private void FixedUpdate()
@@ -38,14 +33,8 @@ namespace Game.Gravity
             var transformCache = transform;
             var direction = (transformCache.position - _gravityCenter).normalized;
 
-            // transform.rotation = Quaternion.FromToRotation(transformCache.up, direction) * transformCache.rotation;
             _rigidbody.rotation = Quaternion.FromToRotation(transformCache.up, direction) * transformCache.rotation;
 
-            var distance = 100f;
-            Debug.DrawRay(transformCache.position, distance * transformCache.up, Color.green, 1f);
-            Debug.DrawRay(transformCache.position, distance * direction, Color.red, 1f);
-            Debug.DrawRay(transformCache.position, distance * transformCache.forward, Color.blue, 1f);
-            
             _rigidbody.AddForce(direction * _gravity);
         }
     }

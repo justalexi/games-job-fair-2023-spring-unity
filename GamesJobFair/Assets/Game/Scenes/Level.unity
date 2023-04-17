@@ -788,7 +788,6 @@ GameObject:
   - component: {fileID: 660095969}
   - component: {fileID: 660095968}
   - component: {fileID: 660095967}
-  - component: {fileID: 660095971}
   m_Layer: 0
   m_Name: Earth
   m_TagString: Attractor
@@ -874,18 +873,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &660095971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 660095966}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3486850da493ae73b03e2822fc96066, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1481,7 +1468,6 @@ GameObject:
   - component: {fileID: 1003982903}
   - component: {fileID: 1003982902}
   - component: {fileID: 1003982901}
-  - component: {fileID: 1003982900}
   m_Layer: 0
   m_Name: Earth_Backup
   m_TagString: Attractor
@@ -1489,18 +1475,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &1003982900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1003982899}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3486850da493ae73b03e2822fc96066, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &1003982901
 SphereCollider:
   m_ObjectHideFlags: 0

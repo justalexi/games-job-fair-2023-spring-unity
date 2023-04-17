@@ -25,11 +25,6 @@ namespace Game.GameModes.Single
         public int CarriedObjectID;
 
 
-        private float _speed => _planeConfig.Speed;
-
-        private float _rotationSpeed => _planeConfig.RotationSpeed;
-
-
         private float _fuel;
 
         private float _timeAccumulator; // was needed to decrease fuel
@@ -39,14 +34,19 @@ namespace Game.GameModes.Single
 
 
         private Rigidbody _rigidbody;
-        private Vector3 _moveAmount;
+        private Animator _animator;
 
-        private float _angularAcceleration = 3f;
-        private float _angularVelocity = 0f;
+        private float _friction = 0.98f;
+        private float _angularFriction = 0.98f;
+
+
+        private float _extraSpeed = 0;
+        private float _angularSpeed = 0f;
 
 
         #region Input
 
+        private bool _isAccelerating;
         private bool _isTurningLeft;
         private bool _isTurningRight;
 
@@ -58,6 +58,7 @@ namespace Game.GameModes.Single
             _planeConfig = _gameConfig.PlaneConfig;
 
             _rigidbody = GetComponent<Rigidbody>();
+            _animator = GetComponent<Animator>();
         }
 
         private void Start()
@@ -86,19 +87,41 @@ namespace Game.GameModes.Single
             //     OnFuelChanged?.Invoke(_fuel.Value);
             // }
 
+
             // Cache inputs
+            if (ControlsReader.Instance.AccelerateValue > 0f)
+            {
+                // jTODO use this flag for vfx and sfx
+                _isAccelerating = true;
+            }
+
+            if (ControlsReader.Instance.AccelerateValue < 0f)
+            {
+                _isAccelerating = false;
+            }
+
+            _extraSpeed += _planeConfig.Acceleration * ControlsReader.Instance.AccelerateValue;
+
+
+            if (_extraSpeed + _planeConfig.DefaultSpeed < _planeConfig.MinSpeed)
+                _extraSpeed = _planeConfig.MinSpeed - _planeConfig.DefaultSpeed;
+            if (_extraSpeed + _planeConfig.DefaultSpeed > _planeConfig.MaxSpeed)
+                _extraSpeed = _planeConfig.MaxSpeed - _planeConfig.DefaultSpeed;
+
+
+            var finalSpeed = _planeConfig.DefaultSpeed + _extraSpeed;
+            var planeViewWorldForward = _planeView.TransformDirection(Vector3.forward);
+            _rigidbody.AddForce(planeViewWorldForward * finalSpeed, ForceMode.VelocityChange);
+
+            _extraSpeed *= _friction;
+
             if (ControlsReader.Instance.RotateValue < 0f)
             {
                 _isTurningLeft = true;
 
-                _angularVelocity -= _angularAcceleration * Time.deltaTime;
+                _angularSpeed -= _planeConfig.AngularAcceleration * Time.deltaTime;
 
-
-                _rotationRoot.Rotate(0f, _angularVelocity, 0f, Space.Self);
-                // _rigidbody.AddRelativeTorque(Vector3.up * -1 * _rotationSpeed, ForceMode.Acceleration); //AddForce(new Vector2(-_moveForce, 0f), ForceMode2D.Force);
-                // _rigidbody.AddRelativeTorque(Vector3.up * -1 * _rotationSpeed, ForceMode.VelocityChange); //AddForce(new Vector2(-_moveForce, 0f), ForceMode2D.Force);
-
-                // _planeView.localRotation = Quaternion.Euler(0f, 0f, 15f * _rigidbody.angularVelocity.y);
+                _rotationRoot.Rotate(0f, _angularSpeed, 0f, Space.Self);
 
                 _isTurningLeft = false;
             }
@@ -107,37 +130,27 @@ namespace Game.GameModes.Single
             {
                 _isTurningRight = true;
 
-                _angularVelocity += _angularAcceleration * Time.deltaTime;
+                _angularSpeed += _planeConfig.AngularAcceleration * Time.deltaTime;
 
-                _rotationRoot.Rotate(0f, _angularVelocity, 0f, Space.Self);
-
-                // _planeView.localRotation = Quaternion.Euler(0f, 0f, -15f * _rigidbody.angularVelocity.y);
+                _rotationRoot.Rotate(0f, _angularSpeed, 0f, Space.Self);
 
                 _isTurningRight = false;
             }
 
-            // _planeView.localRotation = Quaternion.Euler(0f, 0f, -15f * _rigidbody.angularVelocity.y);
-            // _planeView.localRotation = Quaternion.Euler(0f, 0f, 15f * _angularVelocity);
+            _angularSpeed *= _angularFriction;
 
-            // Simulate angularDrag
-            _angularVelocity *= 0.98f;
-
-
-            // transform.Rotate(Vector3.up, Input.GetAxisRaw("Horizontal") * _rotationSpeed, Space.Self);
-            // Vector3 moveDir = new Vector3(/*Input.GetAxisRaw("Horizontal")*/0, 0, Input.GetAxisRaw("Vertical")).normalized;
-            // _moveAmount = moveDir * _speed;
 
             // Animations
-            // if (Input.GetKeyDown(KeyCode.O))
-            // {
-            //     var animator = GetComponent<Animator>();
-            //     animator.Play("Idle");
-            // }
-            // else if (Input.GetKeyDown(KeyCode.P))
-            // {
-            //     var animator = GetComponent<Animator>();
-            //     animator.Play("IdleFast");
-            // }
+            if (_extraSpeed > _planeConfig.DefaultSpeed)
+            {
+                _animator.Play("IdleFast");
+                // jTODO play sound
+            }
+            else
+            {
+                _animator.Play("Idle");
+                // jTODO play sound
+            }
         }
 
         /*private void FixedUpdate()

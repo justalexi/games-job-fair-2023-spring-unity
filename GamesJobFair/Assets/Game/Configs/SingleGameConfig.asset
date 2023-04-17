@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GameMode: 0
   PlaneConfig:
-    Speed: 9.38
-    RotationSpeed: 3
+    Acceleration: 2
+    DefaultSpeed: 1
+    AngularAcceleration: 3
     DashSpeed: 0
     FuelCapacity: 0
   LevelConfigs:
@@ -25,3 +26,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b257b2be03f30edd899032f160d7c543, type: 2}
   - {fileID: 11400000, guid: 5049d2fecdd16472f995aede2dd7de42, type: 2}
   CameraSpeed: 4
+  Gravity: -9.81

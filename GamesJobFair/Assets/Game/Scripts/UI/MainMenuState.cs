@@ -44,7 +44,7 @@ namespace Game.UI
 
         private void OnStart()
         {
-            // jTODO maybe reset game state
+            // jTODO maybe reset game state => no, because can enter this state from PauseState
 
             _UIManager.SwitchTo(typeof(GameState));
 

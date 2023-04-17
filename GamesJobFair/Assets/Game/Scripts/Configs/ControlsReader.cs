@@ -20,6 +20,7 @@ namespace Game.Configs
             }
         }
 
+        public float AccelerateValue => _controls.Game.Accelerate.ReadValue<float>();
         public float RotateValue => _controls.Game.Rotate.ReadValue<float>();
         public event Action OnTogglePause;
 

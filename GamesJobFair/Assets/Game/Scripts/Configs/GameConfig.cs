@@ -12,5 +12,7 @@ namespace Game.Configs
         public LevelConfig[] LevelConfigs;
 
         public float CameraSpeed;
+
+        public float Gravity;
     }
 }

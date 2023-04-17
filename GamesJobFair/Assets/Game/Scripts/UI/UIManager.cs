@@ -100,12 +100,8 @@ namespace Game.UI
 
         private void OnToggleSound()
         {
-            // jTODO update button's view
-            // jTODO use SoundManager singleton to turn on/off sounds
             SoundManager.Instance.ToggleSounds();
             UpdateSoundBtnView();
-
-            // jTODO use GameEvent to save state
         }
 
         private void UpdateSoundBtnView()

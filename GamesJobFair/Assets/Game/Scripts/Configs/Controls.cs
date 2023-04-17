@@ -30,10 +30,10 @@ namespace Game.Configs
             ""id"": ""6db45cbb-c24b-434a-806a-a903fa300642"",
             ""actions"": [
                 {
-                    ""name"": ""Move"",
+                    ""name"": ""Accelerate"",
                     ""type"": ""Value"",
                     ""id"": ""b82d227a-1d0b-4599-894c-76c656adfbb0"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -79,134 +79,68 @@ namespace Game.Configs
                 {
                     ""name"": """",
                     ""id"": ""978bfe49-cc26-4a3d-ab7b-7d7a29327403"",
-                    ""path"": ""<Gamepad>/leftStick"",
+                    ""path"": ""<Gamepad>/leftStick/y"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""Move"",
+                    ""action"": ""Accelerate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""WASD"",
+                    ""name"": ""WS"",
                     ""id"": ""00ca640b-d935-4593-8157-c05846ea39b3"",
-                    ""path"": ""Dpad"",
+                    ""path"": ""1DAxis"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""Accelerate"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""up"",
+                    ""name"": ""Negative"",
+                    ""id"": ""72b271fe-daa6-4f4d-8c43-37ae938695db"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Accelerate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Negative"",
+                    ""id"": ""cfbaff32-a524-4e8c-83ce-a9c07530baa5"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Accelerate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
                     ""id"": ""e2062cb9-1b15-46a2-838c-2f8d72a0bdd9"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
+                    ""action"": ""Accelerate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""up"",
+                    ""name"": ""Positive"",
                     ""id"": ""8180e8bd-4097-4f4e-ab88-4523101a6ce9"",
                     ""path"": ""<Keyboard>/upArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
+                    ""action"": ""Accelerate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""320bffee-a40b-4347-ac70-c210eb8bc73a"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""1c5327b5-f71c-4f60-99c7-4e737386f1d1"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""d2581a9b-1d11-4566-b27d-b92aff5fabbc"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""2e46982e-44cc-431b-9f0b-c11910bf467a"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""fcfe95b8-67b9-4526-84b5-5d0bc98d6400"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""77bff152-3580-4b21-b6de-dcd0c7e41164"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""1635d3fe-58b6-4ba9-a4e2-f4b964f6b5c8"",
-                    ""path"": ""<XRController>/{Primary2DAxis}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""XR"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3ea4d645-4504-4529-b061-ab81934c3752"",
-                    ""path"": ""<Joystick>/stick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Joystick"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
@@ -238,6 +172,28 @@ namespace Game.Configs
                     ""processors"": """",
                     ""groups"": ""Joystick"",
                     ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fb7e2abf-d0d2-495d-8291-6b5d2284960b"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Act"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dc7386c8-61e6-4aac-8d23-2fd9eab9b9ca"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Act"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -321,7 +277,7 @@ namespace Game.Configs
                 {
                     ""name"": """",
                     ""id"": ""7981e7b7-333c-4a71-8194-18be5d5ba606"",
-                    ""path"": ""<Gamepad>/leftStick"",
+                    ""path"": ""<Gamepad>/leftStick/x"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -999,7 +955,7 @@ namespace Game.Configs
 }");
             // Game
             m_Game = asset.FindActionMap("Game", throwIfNotFound: true);
-            m_Game_Move = m_Game.FindAction("Move", throwIfNotFound: true);
+            m_Game_Accelerate = m_Game.FindAction("Accelerate", throwIfNotFound: true);
             m_Game_Rotate = m_Game.FindAction("Rotate", throwIfNotFound: true);
             m_Game_Look = m_Game.FindAction("Look", throwIfNotFound: true);
             m_Game_Act = m_Game.FindAction("Act", throwIfNotFound: true);
@@ -1076,7 +1032,7 @@ namespace Game.Configs
         // Game
         private readonly InputActionMap m_Game;
         private IGameActions m_GameActionsCallbackInterface;
-        private readonly InputAction m_Game_Move;
+        private readonly InputAction m_Game_Accelerate;
         private readonly InputAction m_Game_Rotate;
         private readonly InputAction m_Game_Look;
         private readonly InputAction m_Game_Act;
@@ -1085,7 +1041,7 @@ namespace Game.Configs
         {
             private @Controls m_Wrapper;
             public GameActions(@Controls wrapper) { m_Wrapper = wrapper; }
-            public InputAction @Move => m_Wrapper.m_Game_Move;
+            public InputAction @Accelerate => m_Wrapper.m_Game_Accelerate;
             public InputAction @Rotate => m_Wrapper.m_Game_Rotate;
             public InputAction @Look => m_Wrapper.m_Game_Look;
             public InputAction @Act => m_Wrapper.m_Game_Act;
@@ -1099,9 +1055,9 @@ namespace Game.Configs
             {
                 if (m_Wrapper.m_GameActionsCallbackInterface != null)
                 {
-                    @Move.started -= m_Wrapper.m_GameActionsCallbackInterface.OnMove;
-                    @Move.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnMove;
-                    @Move.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnMove;
+                    @Accelerate.started -= m_Wrapper.m_GameActionsCallbackInterface.OnAccelerate;
+                    @Accelerate.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnAccelerate;
+                    @Accelerate.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnAccelerate;
                     @Rotate.started -= m_Wrapper.m_GameActionsCallbackInterface.OnRotate;
                     @Rotate.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnRotate;
                     @Rotate.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnRotate;
@@ -1118,9 +1074,9 @@ namespace Game.Configs
                 m_Wrapper.m_GameActionsCallbackInterface = instance;
                 if (instance != null)
                 {
-                    @Move.started += instance.OnMove;
-                    @Move.performed += instance.OnMove;
-                    @Move.canceled += instance.OnMove;
+                    @Accelerate.started += instance.OnAccelerate;
+                    @Accelerate.performed += instance.OnAccelerate;
+                    @Accelerate.canceled += instance.OnAccelerate;
                     @Rotate.started += instance.OnRotate;
                     @Rotate.performed += instance.OnRotate;
                     @Rotate.canceled += instance.OnRotate;
@@ -1297,7 +1253,7 @@ namespace Game.Configs
         }
         public interface IGameActions
         {
-            void OnMove(InputAction.CallbackContext context);
+            void OnAccelerate(InputAction.CallbackContext context);
             void OnRotate(InputAction.CallbackContext context);
             void OnLook(InputAction.CallbackContext context);
             void OnAct(InputAction.CallbackContext context);
