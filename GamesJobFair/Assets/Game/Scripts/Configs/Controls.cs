@@ -48,15 +48,6 @@ namespace Game.Configs
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Look"",
-                    ""type"": ""Value"",
-                    ""id"": ""5fe7029a-b2c0-4736-8e71-6908332a1edb"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
                     ""name"": ""Act"",
                     ""type"": ""Button"",
                     ""id"": ""c9b4777d-05b8-44c6-8aac-9c69afbfb097"",
@@ -141,39 +132,6 @@ namespace Game.Configs
                     ""action"": ""Accelerate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""c1f7a91b-d0fd-4a62-997e-7fb9b69bf235"",
-                    ""path"": ""<Gamepad>/rightStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""8c8e490b-c610-4785-884f-f04217b23ca4"",
-                    ""path"": ""<Pointer>/delta"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse;Touch"",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3e5f5442-8668-4b27-a940-df99bad7e831"",
-                    ""path"": ""<Joystick>/{Hatswitch}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Joystick"",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
@@ -957,7 +915,6 @@ namespace Game.Configs
             m_Game = asset.FindActionMap("Game", throwIfNotFound: true);
             m_Game_Accelerate = m_Game.FindAction("Accelerate", throwIfNotFound: true);
             m_Game_Rotate = m_Game.FindAction("Rotate", throwIfNotFound: true);
-            m_Game_Look = m_Game.FindAction("Look", throwIfNotFound: true);
             m_Game_Act = m_Game.FindAction("Act", throwIfNotFound: true);
             m_Game_Pause = m_Game.FindAction("Pause", throwIfNotFound: true);
             // UI
@@ -1034,7 +991,6 @@ namespace Game.Configs
         private IGameActions m_GameActionsCallbackInterface;
         private readonly InputAction m_Game_Accelerate;
         private readonly InputAction m_Game_Rotate;
-        private readonly InputAction m_Game_Look;
         private readonly InputAction m_Game_Act;
         private readonly InputAction m_Game_Pause;
         public struct GameActions
@@ -1043,7 +999,6 @@ namespace Game.Configs
             public GameActions(@Controls wrapper) { m_Wrapper = wrapper; }
             public InputAction @Accelerate => m_Wrapper.m_Game_Accelerate;
             public InputAction @Rotate => m_Wrapper.m_Game_Rotate;
-            public InputAction @Look => m_Wrapper.m_Game_Look;
             public InputAction @Act => m_Wrapper.m_Game_Act;
             public InputAction @Pause => m_Wrapper.m_Game_Pause;
             public InputActionMap Get() { return m_Wrapper.m_Game; }
@@ -1061,9 +1016,6 @@ namespace Game.Configs
                     @Rotate.started -= m_Wrapper.m_GameActionsCallbackInterface.OnRotate;
                     @Rotate.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnRotate;
                     @Rotate.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnRotate;
-                    @Look.started -= m_Wrapper.m_GameActionsCallbackInterface.OnLook;
-                    @Look.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnLook;
-                    @Look.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnLook;
                     @Act.started -= m_Wrapper.m_GameActionsCallbackInterface.OnAct;
                     @Act.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnAct;
                     @Act.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnAct;
@@ -1080,9 +1032,6 @@ namespace Game.Configs
                     @Rotate.started += instance.OnRotate;
                     @Rotate.performed += instance.OnRotate;
                     @Rotate.canceled += instance.OnRotate;
-                    @Look.started += instance.OnLook;
-                    @Look.performed += instance.OnLook;
-                    @Look.canceled += instance.OnLook;
                     @Act.started += instance.OnAct;
                     @Act.performed += instance.OnAct;
                     @Act.canceled += instance.OnAct;
@@ -1255,7 +1204,6 @@ namespace Game.Configs
         {
             void OnAccelerate(InputAction.CallbackContext context);
             void OnRotate(InputAction.CallbackContext context);
-            void OnLook(InputAction.CallbackContext context);
             void OnAct(InputAction.CallbackContext context);
             void OnPause(InputAction.CallbackContext context);
         }

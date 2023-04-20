@@ -8,7 +8,7 @@ namespace Game.UI
     public class GameOverFailureState : BaseUIState
     {
         [SerializeField]
-        private Button _restartBtn;
+        private Button _mainMenuBtn;
 
         [SerializeField]
         private Button _quitBtn;
@@ -20,38 +20,37 @@ namespace Game.UI
 
             Time.timeScale = 0f;
 
-            _restartBtn.onClick.AddListener(OnRestart);
+            _mainMenuBtn.onClick.AddListener(OnMainMenu);
             _quitBtn.onClick.AddListener(OnQuit);
 
             ControlsReader.Instance.EnableUIControls();
 
-            _UIManager.EventSystem.SetSelectedGameObject(_restartBtn.gameObject);
+            _UIManager.EventSystem.SetSelectedGameObject(_mainMenuBtn.gameObject);
 
             SoundManager.Instance.PlaySound(SoundManager.Instance.ShowGameOver);
         }
 
         public override void Exit()
         {
-            // jTODO Is it ok to disable class before unsubscribing 
             base.Exit();
 
-            _restartBtn.onClick.RemoveListener(OnRestart);
+            _mainMenuBtn.onClick.RemoveListener(OnMainMenu);
             _quitBtn.onClick.RemoveListener(OnQuit);
 
             Time.timeScale = 1f;
         }
 
-        private void OnRestart()
+        private void OnMainMenu()
         {
-            // jTODO maybe reset game state
-
-            _UIManager.SwitchTo(typeof(GameState));
-
             SoundManager.Instance.PlaySound(SoundManager.Instance.Click);
+
+            _UIManager.SwitchTo(typeof(MainMenuState));
         }
 
         private void OnQuit()
         {
+            SoundManager.Instance.PlaySound(SoundManager.Instance.Click);
+
             _UIManager.QuitEvent.Raise();
         }
     }

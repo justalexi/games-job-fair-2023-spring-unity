@@ -10,32 +10,12 @@ namespace Game.Sounds
         private static string SOUNDS_VOLUME_KEY = "SoundsVolume";
 
         [Header("Audio Clips")]
-        [SerializeField]
-        private AudioClip _jump;
-
-        [SerializeField]
-        private AudioClip _land;
-
-        [SerializeField]
-        private AudioClip _attack1;
-
-        [SerializeField]
-        private AudioClip _attack2;
 
         [SerializeField]
         private AudioClip _collect;
 
         [SerializeField]
-        private AudioClip _death;
-
-        [SerializeField]
-        private AudioClip _enemyDeath;
-
-        [SerializeField]
-        private AudioClip _showPause;
-
-        [SerializeField]
-        private AudioClip _hidePause;
+        private AudioClip _drop;
 
         [SerializeField]
         private AudioClip _showGameSuccess;
@@ -51,17 +31,16 @@ namespace Game.Sounds
         private AudioSource _musicAudioSource;
 
         [SerializeField]
+        private AudioSource _engineAudioSource;
+
+        [SerializeField]
         private AudioSource _soundsAudioSource;
 
-        public AudioClip Jump => _jump;
-        public AudioClip Land => _land;
-        public AudioClip Attack1 => _attack1;
-        public AudioClip Attack2 => _attack2;
+
+        private bool _isEngineFast;
+
         public AudioClip Collect => _collect;
-        public AudioClip Death => _death;
-        public AudioClip EnemyDeath => _enemyDeath;
-        public AudioClip ShowPause => _showPause;
-        public AudioClip HidePause => _hidePause;
+        public AudioClip Drop => _drop;
         public AudioClip ShowGameSuccess => _showGameSuccess;
         public AudioClip ShowGameOver => _showGameOver;
         public AudioClip Click => _click;
@@ -101,6 +80,7 @@ namespace Game.Sounds
             {
                 var soundsVolume = PlayerPrefs.GetFloat(SOUNDS_VOLUME_KEY);
                 _musicAudioSource.volume = soundsVolume;
+                _engineAudioSource.volume = soundsVolume;
                 _soundsAudioSource.volume = soundsVolume;
             }
 
@@ -115,6 +95,16 @@ namespace Game.Sounds
             }
         }
 
+        public void PlayEngineSound()
+        {
+            _engineAudioSource.Play();
+        }
+
+        public void StopEngineSound()
+        {
+            _engineAudioSource.Stop();
+        }
+
         public void PlayClick()
         {
             if (_click != null)
@@ -126,6 +116,7 @@ namespace Game.Sounds
         public void ToggleSounds()
         {
             _musicAudioSource.volume = _musicAudioSource.volume > 0f ? 0f : 1f;
+            _engineAudioSource.volume = _engineAudioSource.volume > 0f ? 0f : 1f;
             _soundsAudioSource.volume = _soundsAudioSource.volume > 0f ? 0f : 1f;
 
             PlayerPrefs.SetFloat(SOUNDS_VOLUME_KEY, _soundsAudioSource.volume);

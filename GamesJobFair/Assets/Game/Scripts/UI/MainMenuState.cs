@@ -44,15 +44,15 @@ namespace Game.UI
 
         private void OnStart()
         {
-            // jTODO maybe reset game state => no, because can enter this state from PauseState
+            SoundManager.Instance.PlaySound(SoundManager.Instance.Click);
 
             _UIManager.SwitchTo(typeof(GameState));
-
-            SoundManager.Instance.PlaySound(SoundManager.Instance.Click);
         }
 
         private void OnQuit()
         {
+            SoundManager.Instance.PlaySound(SoundManager.Instance.Click);
+
             _UIManager.QuitEvent.Raise();
         }
     }

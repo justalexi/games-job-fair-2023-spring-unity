@@ -62,11 +62,20 @@ namespace Game.UI
         private GameEvent _mainMenuExitedEvent;
 
         [SerializeField]
+        private GameEvent _gameStateEnteredEvent;
+
+        [SerializeField]
+        private GameEvent _gameStateExitedEvent;
+
+        [SerializeField]
         private GameEvent _quitEvent;
 
 
         public GameEvent MainMenuEnteredEvent => _mainMenuEnteredEvent;
         public GameEvent MainMenuExitedEvent => _mainMenuExitedEvent;
+        
+        public GameEvent GameStateEnteredEvent => _gameStateEnteredEvent;
+        public GameEvent GameStateExitedEvent => _gameStateExitedEvent;
         public GameEvent QuitEvent => _quitEvent;
 
 

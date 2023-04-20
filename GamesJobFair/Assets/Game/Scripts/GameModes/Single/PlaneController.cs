@@ -1,11 +1,19 @@
 using System;
 using Game.Configs;
+using Game.Entities;
+using Game.Sounds;
 using UnityEngine;
 
 namespace Game.GameModes.Single
 {
     public class PlaneController : MonoBehaviour
     {
+        [SerializeField]
+        private ParticleSystem _exhaustParticleSystem;
+
+        [SerializeField]
+        private ParticleSystem _exhaustGasParticleSystem;
+
         [SerializeField]
         private Transform _rotationRoot;
 
@@ -22,15 +30,7 @@ namespace Game.GameModes.Single
         private GameConfig _gameConfig;
 
         private PlaneConfig _planeConfig;
-        public int CarriedObjectID;
-
-
-        private float _fuel;
-
-        private float _timeAccumulator; // was needed to decrease fuel
-
-        // jTODO use GameEvent
-        public event Action<int> OnFuelChanged;
+        public Necessity CarriedObject { get; set; }
 
 
         private Rigidbody _rigidbody;
@@ -43,14 +43,10 @@ namespace Game.GameModes.Single
         private float _extraSpeed = 0;
         private float _angularSpeed = 0f;
 
-
-        #region Input
-
-        private bool _isAccelerating;
-        private bool _isTurningLeft;
-        private bool _isTurningRight;
-
-        #endregion
+        private float _particlesChangeSpeed = 0.8f;
+        private float _exhauseParticlesMultiplier;
+        private ParticleSystem.MainModule _exhauseParticlesMM;
+        private ParticleSystem.MainModule _exhauseGasParticlesMM;
 
 
         private void Awake()
@@ -59,55 +55,21 @@ namespace Game.GameModes.Single
 
             _rigidbody = GetComponent<Rigidbody>();
             _animator = GetComponent<Animator>();
-        }
 
-        private void Start()
-        {
-            // transform.position = 110 * Vector3.up;
-        }
+            _rigidbody.isKinematic = true;
 
+            _exhauseParticlesMM = _exhaustParticleSystem.main;
+            _exhauseGasParticlesMM = _exhaustGasParticleSystem.main;
+        }
 
         private void Update()
         {
-            // Debug.Log($"{GetType().Name}.Update: ControlsReader.Instance.RotateValue = {ControlsReader.Instance.RotateValue}");
-
-            // _timeAccumulator += Time.deltaTime;
-            // if (_timeAccumulator > 1)
-            // {
-            //     _timeAccumulator -= 1;
-            //     _fuel.Value -= 1;
-            //
-            //     OnFuelChanged?.Invoke(_fuel.Value);
-            // }
-
-            // if (Input.GetKeyDown(KeyCode.F))
-            // {
-            //     _fuel.Value += 10;
-            //
-            //     OnFuelChanged?.Invoke(_fuel.Value);
-            // }
-
-
-            // Cache inputs
-            if (ControlsReader.Instance.AccelerateValue > 0f)
-            {
-                // jTODO use this flag for vfx and sfx
-                _isAccelerating = true;
-            }
-
-            if (ControlsReader.Instance.AccelerateValue < 0f)
-            {
-                _isAccelerating = false;
-            }
-
             _extraSpeed += _planeConfig.Acceleration * ControlsReader.Instance.AccelerateValue;
-
 
             if (_extraSpeed + _planeConfig.DefaultSpeed < _planeConfig.MinSpeed)
                 _extraSpeed = _planeConfig.MinSpeed - _planeConfig.DefaultSpeed;
             if (_extraSpeed + _planeConfig.DefaultSpeed > _planeConfig.MaxSpeed)
                 _extraSpeed = _planeConfig.MaxSpeed - _planeConfig.DefaultSpeed;
-
 
             var finalSpeed = _planeConfig.DefaultSpeed + _extraSpeed;
             var planeViewWorldForward = _planeView.TransformDirection(Vector3.forward);
@@ -115,69 +77,56 @@ namespace Game.GameModes.Single
 
             _extraSpeed *= _friction;
 
-            if (ControlsReader.Instance.RotateValue < 0f)
+            var rotateValue = ControlsReader.Instance.RotateValue;
+            if (rotateValue != 0f)
             {
-                _isTurningLeft = true;
-
-                _angularSpeed -= _planeConfig.AngularAcceleration * Time.deltaTime;
-
+                _angularSpeed += rotateValue * _planeConfig.AngularAcceleration * Time.deltaTime;
                 _rotationRoot.Rotate(0f, _angularSpeed, 0f, Space.Self);
-
-                _isTurningLeft = false;
-            }
-
-            if (ControlsReader.Instance.RotateValue > 0f)
-            {
-                _isTurningRight = true;
-
-                _angularSpeed += _planeConfig.AngularAcceleration * Time.deltaTime;
-
-                _rotationRoot.Rotate(0f, _angularSpeed, 0f, Space.Self);
-
-                _isTurningRight = false;
             }
 
             _angularSpeed *= _angularFriction;
 
+            var turn = Mathf.Clamp(_angularSpeed, -5f, 5f);
+            _planeView.localRotation = Quaternion.Euler(0f, 0f, -turn * _planeConfig.TurnMultiplier);
 
-            // Animations
-            if (_extraSpeed > _planeConfig.DefaultSpeed)
+            UpdateView();
+        }
+
+        private void UpdateView()
+        {
+            if (ControlsReader.Instance.AccelerateValue > 0f)
             {
+                _exhauseParticlesMultiplier = Mathf.Clamp(_exhauseParticlesMultiplier + _particlesChangeSpeed * Time.deltaTime, 1f, 2f);
+                _exhauseParticlesMM.startLifetimeMultiplier = _exhauseParticlesMultiplier;
+                _exhauseGasParticlesMM.startSizeMultiplier = _exhauseParticlesMultiplier;
+                _exhauseGasParticlesMM.startLifetimeMultiplier = _exhauseParticlesMultiplier;
+
                 _animator.Play("IdleFast");
-                // jTODO play sound
             }
-            else
+
+            if (ControlsReader.Instance.AccelerateValue <= 0f)
             {
+                _exhauseParticlesMultiplier = Mathf.Clamp(_exhauseParticlesMultiplier - _particlesChangeSpeed * Time.deltaTime, 1f, 2f);
+                _exhauseParticlesMM.startLifetimeMultiplier = _exhauseParticlesMultiplier;
+                _exhauseGasParticlesMM.startSizeMultiplier = _exhauseParticlesMultiplier;
+                _exhauseGasParticlesMM.startLifetimeMultiplier = _exhauseParticlesMultiplier;
+
                 _animator.Play("Idle");
-                // jTODO play sound
             }
         }
 
-        /*private void FixedUpdate()
+        public void PlaySoundEngine()
         {
-            // jTODO maybe convert "up" from local to world
-            if (_isTurningLeft)
-            {
-                // Debug.Log($"{GetType().Name}.FixedUpdate: left");
+            SoundManager.Instance.PlayEngineSound();
 
-                _rigidbody.AddRelativeTorque(Vector3.up * -1 * _rotationSpeed, ForceMode.Acceleration); //AddForce(new Vector2(-_moveForce, 0f), ForceMode2D.Force);
-                // _rigidbody.AddRelativeTorque(Vector3.up * -1 * _rotationSpeed, ForceMode.VelocityChange); //AddForce(new Vector2(-_moveForce, 0f), ForceMode2D.Force);
+            _rigidbody.isKinematic = false;
+        }
 
-                _isTurningLeft = false;
-            }
-            else if (_isTurningRight)
-            {
-                // Debug.Log($"{GetType().Name}.FixedUpdate: right");
-                // _rigidbody.AddForce(new Vector2(_moveForce, 0f), ForceMode2D.Force);
-                _rigidbody.AddRelativeTorque(Vector3.up * 1 * _rotationSpeed, ForceMode.Acceleration);
-                // _rigidbody.AddRelativeTorque(Vector3.up * 1 * _rotationSpeed, ForceMode.VelocityChange);
+        public void StopSoundEngine()
+        {
+            SoundManager.Instance.StopEngineSound();
 
-                _isTurningRight = false;
-            }
-
-            Debug.Log($"{GetType().Name}.FixedUpdate: _rigidbody.angularVelocity = {_rigidbody.angularVelocity}");
-
-            // _rigidbody.MovePosition(_rigidbody.position + transform.TransformDirection(_moveAmount) * Time.fixedDeltaTime);
-        }*/
+            _rigidbody.isKinematic = true;
+        }
     }
 }

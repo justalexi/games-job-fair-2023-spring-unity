@@ -33,9 +33,6 @@ namespace Game.Configs
 
             _controls.Game.Pause.performed += OnTogglePausePerformed;
             _controls.UI.Unpause.performed += OnTogglePausePerformed;
-
-            // jTODO remove
-            _controls.Game.Enable();
         }
 
         private void OnTogglePausePerformed(InputAction.CallbackContext context)

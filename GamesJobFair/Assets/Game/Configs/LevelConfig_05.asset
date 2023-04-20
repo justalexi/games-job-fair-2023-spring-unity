@@ -12,11 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33008f30239c45a59d80928adaa6979e, type: 3}
   m_Name: LevelConfig_05
   m_EditorClassIdentifier: 
-  Title: Save the Humankind
+  Title: Level 5
   Duration: 60
-  DecayRate: 8
+  DecayRate: 3.5
   TotalHealth: 100
-  TargetLocations: []
-  ResourceSpawnLocations:
-  - {fileID: 0}
+  HealthRecoveryPercent: 0.15
+  Sources: {fileID: 11400000, guid: b144eeb16766c0ed5b400a23831d1866, type: 2}
+  Targets: {fileID: 11400000, guid: b144eeb16766c0ed5b400a23831d1866, type: 2}
   NecessityPrefab: {fileID: 5653053747449836495, guid: 0f1dc52e779bed9048f3dbec76b6a653, type: 3}
+  TargetPrefab: {fileID: -671782289484827890, guid: 5b72daa922d4b23efaf1035c677ffb06, type: 3}
+  NecessitySpawnMinDelay: 1
+  NecessitySpawnMaxDelay: 3
+  TargetSpawnMinDelay: 0.5
+  TargetSpawnMaxDelay: 4

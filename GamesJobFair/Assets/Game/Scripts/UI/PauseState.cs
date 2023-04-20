@@ -28,13 +28,10 @@ namespace Game.UI
             ControlsReader.Instance.EnableUIControls();
 
             _UIManager.EventSystem.SetSelectedGameObject(_unpauseBtn.gameObject);
-
-            SoundManager.Instance.PlaySound(SoundManager.Instance.ShowPause);
         }
 
         public override void Exit()
         {
-            // jTODO Is it ok to disable class before unsubscribing 
             base.Exit();
 
             _unpauseBtn.onClick.RemoveListener(OnTogglePause);
@@ -43,18 +40,20 @@ namespace Game.UI
             Time.timeScale = 1f;
 
             ControlsReader.Instance.OnTogglePause -= OnTogglePause;
-
-            SoundManager.Instance.PlaySound(SoundManager.Instance.HidePause);
         }
 
         // Pause can be triggered from Controls and UI
         private void OnTogglePause()
         {
+            SoundManager.Instance.PlaySound(SoundManager.Instance.Click);
+
             _UIManager.SwitchTo(typeof(GameState));
         }
 
         private void OnQuit()
         {
+            SoundManager.Instance.PlaySound(SoundManager.Instance.Click);
+
             _UIManager.QuitEvent.Raise();
         }
     }

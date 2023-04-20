@@ -13,8 +13,8 @@ namespace Game.Configs
 
         public float DecayRate;
 
-        // jTODO rename (it is state of well-being or smth)
         public float TotalHealth;
+        public float HealthRecoveryPercent;
 
         // public Transform[] TargetLocations;
         public SpawnPointsCollector Sources;
@@ -23,6 +23,10 @@ namespace Game.Configs
         // public Transform[] ResourceSpawnLocations;
 
         public Necessity NecessityPrefab;
-        public GameObject TargetPrefabs;
+        public Target TargetPrefab;
+        public float NecessitySpawnMinDelay;
+        public float NecessitySpawnMaxDelay;
+        public float TargetSpawnMinDelay;
+        public float TargetSpawnMaxDelay;
     }
 }

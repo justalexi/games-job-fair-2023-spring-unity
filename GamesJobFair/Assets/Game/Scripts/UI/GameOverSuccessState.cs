@@ -26,13 +26,10 @@ namespace Game.UI
             ControlsReader.Instance.EnableUIControls();
 
             _UIManager.EventSystem.SetSelectedGameObject(_mainMenuBtn.gameObject);
-
-            SoundManager.Instance.PlaySound(SoundManager.Instance.ShowGameSuccess);
         }
 
         public override void Exit()
         {
-            // jTODO Is it ok to disable class before unsubscribing 
             base.Exit();
 
             _mainMenuBtn.onClick.RemoveListener(OnMainMenu);
@@ -43,12 +40,15 @@ namespace Game.UI
 
         private void OnMainMenu()
         {
-            // jTODO maybe reset game state
+            SoundManager.Instance.PlaySound(SoundManager.Instance.Click);
+
             _UIManager.SwitchTo(typeof(MainMenuState));
         }
 
         private void OnQuit()
         {
+            SoundManager.Instance.PlaySound(SoundManager.Instance.Click);
+
             _UIManager.QuitEvent.Raise();
         }
     }

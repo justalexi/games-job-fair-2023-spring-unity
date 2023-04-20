@@ -15,9 +15,6 @@ namespace Game.Movement
 
         private float DeltaTime => _useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
 
-        // jTODO make it shared
-        private float _angle;
-
 
         private void Update()
         {

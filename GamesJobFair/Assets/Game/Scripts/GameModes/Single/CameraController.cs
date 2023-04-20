@@ -54,7 +54,6 @@ namespace Game.GameModes.Single
             if (_gameConfig == null)
                 yield return null;
 
-            // yield return null;
             var cameraTransform = transform;
             cameraTransform.parent = _planeController.CameraPosition;
 
@@ -76,12 +75,9 @@ namespace Game.GameModes.Single
                 yield return null;
 
             var cameraTransform = transform;
-            // cameraTransform.parent = _planeController.CameraPosition;
-            // cameraTransform.SetParent(null);
             cameraTransform.parent = null;
 
             while ((cameraTransform.localPosition - _cameraMenuTransform.position).sqrMagnitude > 1f)
-                // while (true)
             {
                 cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, _cameraMenuTransform.position, _gameConfig.CameraSpeed * Time.unscaledDeltaTime);
                 transform.localRotation = Quaternion.Slerp(transform.localRotation, ZeroRotation, _gameConfig.CameraSpeed * Time.unscaledDeltaTime);

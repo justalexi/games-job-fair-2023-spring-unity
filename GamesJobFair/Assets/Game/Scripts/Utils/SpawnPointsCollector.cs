@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using Game.World;
-using UnityEditor;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace Game.Utils
 {
@@ -12,6 +14,10 @@ namespace Game.Utils
         private List<WorldLocation> _spawnPointsLocations;
 
         public List<WorldLocation> SpawnPointsLocations => _spawnPointsLocations;
+
+        // jTODO check saving without custom class
+        public List<Vector3> SpawnPointsPositions;
+        public List<Quaternion> SpawnPointsRotations;
 
 
         // jTODO take into account Earth's rotation
@@ -26,21 +32,31 @@ namespace Game.Utils
             {
                 var worldLocation = new WorldLocation(location.transform.position, location.transform.rotation);
                 _spawnPointsLocations.Add(worldLocation);
+
+                SpawnPointsPositions.Add(location.transform.position);
+                SpawnPointsRotations.Add(location.transform.rotation);
             }
         }
 
         public void Clear()
         {
             _spawnPointsLocations.Clear();
+
+            SpawnPointsPositions.Clear();
+            SpawnPointsRotations.Clear();
         }
     }
 
+#if UNITY_EDITOR
     [CustomEditor(typeof(SpawnPointsCollector))]
     public class SpawnPointsCollectorEditor : Editor
     {
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
+
+            serializedObject.Update();
+
             var script = (SpawnPointsCollector)target;
 
             if (GUILayout.Button("Collect", GUILayout.Height(40)))
@@ -52,6 +68,11 @@ namespace Game.Utils
             {
                 script.Clear();
             }
+
+            EditorUtility.SetDirty(target);
+
+            serializedObject.ApplyModifiedProperties();
         }
     }
+#endif
 }

@@ -94,16 +94,22 @@ crashlytics-build.properties
 # Game assets
 /Assets/AHProxy/
 /Assets/AHProxy.meta
+/Assets/HONETi/
+/Assets/HONETi.meta
 /Assets/ParrelSync/
 /Assets/ParrelSync.meta
 /Assets/Plugins/CW/
 /Assets/Plugins/CW.meta
+/Assets/Plugins/Demigiant/
+/Assets/Plugins/Demigiant.meta
+/Assets/Sounds/
+/Assets/Sounds.meta
 /Assets/StompyRobot/
 /Assets/StompyRobot.meta
 /Assets/Understone/
 /Assets/Understone.meta
-/Assets/HONETi/
-/Assets/HONETi.meta
+/Assets/UnityTechnologies/
+/Assets/UnityTechnologies.meta
 
 
 # Other

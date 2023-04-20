@@ -1,5 +1,6 @@
 using Game.Configs;
 using Game.GameModes.Single;
+using Game.Sounds;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,37 +9,34 @@ namespace Game.UI
 {
     public class GameState : BaseUIState
     {
-        // [SerializeField]
-        //  private TextMeshProUGUI _starsText;
-
-
         [SerializeField]
         private Button _pauseBtn;
 
         [SerializeField]
         private TextMeshProUGUI _timerText;
 
-        // [SerializeField]
-        // private Image[] _playerLives;
+        [SerializeField]
+        private TextMeshProUGUI _scoreText;
+
+        [SerializeField]
+        private Slider _healthSlider;
+
+        [SerializeField]
+        private Image _healthFill;
+
+        [SerializeField]
+        private GameObject _messagePanel;
+
+        [SerializeField]
+        private TextMeshProUGUI _levelTitle;
 
 
-        // private Player _player;
         private GameController _gameController;
-
-        // jTODO add pause button if it is present in UI
 
 
         public override void Enter()
         {
             base.Enter();
-
-            // _player = FindObjectOfType<Player>();
-            // if (_player != null)
-            // {
-            //     _player.OnNumStarsChanged += OnNumStarsChanged;
-            //     _player.OnDamageTaken += OnDamageTaken;
-            //     _player.OnDeath += OnDeath;
-            // }
 
             _pauseBtn.onClick.AddListener(OnTogglePause);
 
@@ -47,45 +45,49 @@ namespace Game.UI
             if (_gameController != null)
             {
                 _gameController.OnTimeChanged += OnTimeChanged;
+                _gameController.OnHealthChanged += OnHealthChanged;
+                _gameController.OnScoreChanged += OnScoreChanged;
                 _gameController.OnGameFailure += OnGameFailure;
                 _gameController.OnGameSuccess += OnGameSuccess;
+                _gameController.OnShowLevelMessage += OnShowLevelMessage;
+                _gameController.OnHideLevelMessage += OnHideLevelMessage;
+
+                // Update UI as soon as possible
+                OnTimeChanged(_gameController.LevelConfig.Duration);
+                OnHealthChanged(_gameController.LevelConfig.TotalHealth, Color.white);
+                OnScoreChanged(_gameController.Score);
             }
 
             ControlsReader.Instance.OnTogglePause += OnTogglePause;
 
             ControlsReader.Instance.EnableGameControls();
 
+            _UIManager.GameStateEnteredEvent.Raise();
+
             _UIManager.EventSystem.SetSelectedGameObject(null);
         }
 
         public override void Exit()
         {
-            // jTODO Is it ok to disable class before unsubscribing 
             base.Exit();
-
-            // if (_player != null)
-            // {
-            //     _player.OnNumStarsChanged -= OnNumStarsChanged;
-            //     _player.OnDamageTaken -= OnDamageTaken;
-            //     _player.OnDeath -= OnDeath;
-            // }
 
             _pauseBtn.onClick.RemoveListener(OnTogglePause);
 
             if (_gameController != null)
             {
                 _gameController.OnTimeChanged -= OnTimeChanged;
+                _gameController.OnHealthChanged -= OnHealthChanged;
+                _gameController.OnScoreChanged -= OnScoreChanged;
                 _gameController.OnGameFailure -= OnGameFailure;
                 _gameController.OnGameSuccess -= OnGameSuccess;
+                _gameController.OnShowLevelMessage -= OnShowLevelMessage;
+                _gameController.OnHideLevelMessage -= OnHideLevelMessage;
             }
 
             ControlsReader.Instance.OnTogglePause -= OnTogglePause;
-        }
 
-        // private void OnNumStarsChanged(int numStars)
-        // {
-        //     _starsText.text = numStars.ToString();
-        // }
+            _UIManager.GameStateExitedEvent.Raise();
+        }
 
         private void OnTimeChanged(float time)
         {
@@ -100,6 +102,17 @@ namespace Game.UI
             _timerText.text = $"<mspace=0.45em>{numMinutesFull}:{numSecondsFull}";
         }
 
+        private void OnScoreChanged(int score)
+        {
+            _scoreText.text = $"Score: {score}";
+        }
+
+        private void OnHealthChanged(float health, Color color)
+        {
+            _healthSlider.value = health;
+            // _healthFill.color = color;
+        }
+
         private void OnGameFailure()
         {
             _UIManager.SwitchTo(typeof(GameOverFailureState));
@@ -110,22 +123,23 @@ namespace Game.UI
             _UIManager.SwitchTo(typeof(GameOverSuccessState));
         }
 
-        // private void OnDamageTaken(int numLives)
-        // {
-        //     for (int i = 0; i < _playerLives.Length; i++)
-        //     {
-        //         _playerLives[i].enabled = i < numLives;
-        //     }
-        // }
 
-        // private void OnDeath()
-        // {
-        //     _UIManager.SwitchTo(typeof(GameOverState));
-        // }
+        private void OnShowLevelMessage(string title)
+        {
+            _levelTitle.text = title;
+            _messagePanel.SetActive(true);
+        }
+
+        private void OnHideLevelMessage()
+        {
+            _messagePanel.SetActive(false);
+        }
 
         // Pause can be triggered from Controls and UI
         private void OnTogglePause()
         {
+            SoundManager.Instance.PlaySound(SoundManager.Instance.Click);
+
             _UIManager.SwitchTo(typeof(PauseState));
         }
     }

@@ -10,8 +10,7 @@ namespace Game.Configs
         public float MinSpeed;
         public float MaxSpeed;
         public float AngularAcceleration;
-        public float DashSpeed;
 
-        public float FuelCapacity;
+        public int TurnMultiplier;
     }
 }

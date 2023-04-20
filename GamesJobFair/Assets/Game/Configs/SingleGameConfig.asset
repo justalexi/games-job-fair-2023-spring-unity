@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GameMode: 0
   PlaneConfig:
-    Acceleration: 2
-    DefaultSpeed: 1
-    AngularAcceleration: 3
-    DashSpeed: 0
-    FuelCapacity: 0
+    Acceleration: 10
+    DefaultSpeed: 0.15
+    MinSpeed: 0.1
+    MaxSpeed: 0.3
+    AngularAcceleration: 5
+    TurnMultiplier: 6
   LevelConfigs:
   - {fileID: 11400000, guid: 1c5e3f97373b8977b9ed7d8c0484a37c, type: 2}
   - {fileID: 11400000, guid: 61327f7d3495ff7b9a50283c111b5745, type: 2}
