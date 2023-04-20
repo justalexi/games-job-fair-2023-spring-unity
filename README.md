@@ -7,6 +7,8 @@ Variations of State pattern are used:
 
 ControlsReader and SoundManager are implemented as Singletons.
 
+Observers... observers everywhere.
+
 
 Assets used:
 
@@ -21,7 +23,6 @@ https://assetstore.unity.com/packages/tools/animation/dotween-hotween-v2-27676
 
 Particle Pack
 https://assetstore.unity.com/packages/vfx/particles/particle-pack-127325
-
 
 Space Graphics Toolkit
 https://assetstore.unity.com/packages/tools/level-design/space-graphics-toolkit-4160
