@@ -1,16 +1,19 @@
 # games-job-fair-2023-spring-unity
 Made for the 'Games Job Fair Spring 2023 - Unity Programming Challenge'
 
-Variations of State pattern are used:
-1. in UIManager,
-2. for states of "Target" objects.
 
-ControlsReader and SoundManager are implemented as Singletons.
-
-Observers... observers everywhere.
+1. Published on itch.io:
+https://justalexi.itch.io/save-the-planet
 
 
-Assets used:
+2. Info about patterns:
+ 
+- Variations of State pattern are in UIManager, and in states of "Target" objects.
+- ControlsReader and SoundManager are implemented as Singletons.
+- Observers... observers everywhere.
+
+
+3. Assets used:
 
 FREE Aircraft Pack
 https://assetstore.unity.com/packages/3d/vehicles/air/free-aircraft-pack-194025
