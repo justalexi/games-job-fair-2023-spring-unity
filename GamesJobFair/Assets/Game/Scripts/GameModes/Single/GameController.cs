@@ -86,13 +86,6 @@ namespace Game.GameModes.Single
             if (!_isLevelRunning)
                 return;
 
-            if (Input.GetKeyDown(KeyCode.Alpha9))
-            {
-                _isLevelRunning = false;
-                OnLevelSuccess();
-                return;
-            }
-
             _timePassed += Time.deltaTime;
 
             if (_timePassed >= _numSecondsPassed + 1)
@@ -119,8 +112,7 @@ namespace Game.GameModes.Single
             if (_currentLevelHealth <= 0)
             {
                 _isLevelRunning = false;
-                CleanUp();
-                StartCoroutine(FinishCleanup());
+                StartCoroutine(GameFailureCleanup());
             }
         }
 
@@ -146,11 +138,9 @@ namespace Game.GameModes.Single
 
         private void SwitchToLevel(int levelIndex)
         {
-            CleanUp();
-
             if (levelIndex >= _gameConfig.LevelConfigs.Length)
             {
-                StartCoroutine(FinishGameCleanup());
+                StartCoroutine(GameSuccessCleanup());
                 return;
             }
 
@@ -161,10 +151,11 @@ namespace Game.GameModes.Single
                 throw new Exception($"Undefined level {_currentLevelIndex}");
             }
 
+            CleanUpLevel();
             InitLevel();
         }
 
-        private void CleanUp()
+        private void CleanUpLevel()
         {
             if (_targetsParent != null)
             {
@@ -200,6 +191,15 @@ namespace Game.GameModes.Single
             {
                 StopCoroutine(_spawnTargetsCoroutine);
                 _spawnTargetsCoroutine = null;
+            }
+        }
+
+        private void CleanUpPlane()
+        {
+            if (_planeController.CarriedObject != null)
+            {
+                Destroy(_planeController.CarriedObject.gameObject);
+                _planeController.CarriedObject = null;
             }
         }
 
@@ -350,15 +350,21 @@ namespace Game.GameModes.Single
             SwitchToLevel(_currentLevelIndex + 1);
         }
 
-        private IEnumerator FinishGameCleanup()
+        private IEnumerator GameSuccessCleanup()
         {
             yield return new WaitForSeconds(2);
+
+            CleanUpLevel();
+            CleanUpPlane();
 
             OnGameSuccess?.Invoke();
         }
 
-        private IEnumerator FinishCleanup()
+        private IEnumerator GameFailureCleanup()
         {
+            CleanUpLevel();
+            CleanUpPlane();
+
             yield return new WaitForSeconds(2);
 
             OnGameFailure?.Invoke();
